@@ -4,223 +4,514 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lise</title>
+    <title>Lise — Mapeando a Complexidade Orgânica</title>
+    <!-- Google Fonts: Playfair Display & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#4A5D4E',
+                            sage: '#8DAA91',
+                            gold: '#C5A467',
+                            cream: '#F9F7F2',
+                            slate: '#465A65',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        /* Transição suave para o efeito flutuante */
         #cabecalho-principal {
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        :root {
-            --brand: #5a7a6f;
+        /* Estilos estruturais adicionais para o Flashcard Interativo 3D */
+        .perspective-1000 {
+            perspective: 1000px;
         }
-
-        .brand-text {
-            color: var(--brand) !important;
+        .preserve-3d {
+            transform-style: preserve-3d;
         }
-
-        .hover-brand-text:hover {
-            color: var(--brand) !important;
+        .backface-hidden {
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
         }
-
-        .brand-bg {
-            background-color: var(--brand) !important;
-        }
-
-        .hover-brand-bg:hover {
-            background-color: #4f6d63 !important;
-        }
-
-        .brand-bg-soft {
-            background-color: rgba(90, 122, 111, 0.12) !important;
-        }
-
-        .brand-border {
-            border-color: var(--brand) !important;
-        }
-
-        .hover-border-brand:hover {
-            border-color: var(--brand) !important;
-        }
-
-        .shadow-brand {
-            box-shadow: 0 20px 25px -5px rgba(90, 122, 111, 0.25), 0 10px 10px -5px rgba(90, 122, 111, 0.05) !important;
-        }
-
-        .shadow-brand-soft {
-            box-shadow: 0 25px 50px -12px rgba(90, 122, 111, 0.25) !important;
-        }
-
-        .group:hover .group-hover-brand-bg {
-            background-color: var(--brand) !important;
+        .rotate-y-180 {
+            transform: rotateY(180deg);
         }
     </style>
 </head>
 
-<body class="bg-slate-50 text-slate-900 font-sans antialiased">
+<body class="bg-brand-cream text-brand-slate font-sans antialiased selection:bg-brand-sage/30 selection:text-brand-dark">
 
     <!-- HEADER / NAVEGAÇÃO -->
     <header id="cabecalho-principal" class="fixed w-full top-0 z-50 py-4 px-6">
-        <nav id="barra-nav"
-            class="container mx-auto flex justify-between items-center bg-white/80 backdrop-blur-md py-4 px-8 rounded-none transition-all duration-300">
-            <div class="text-2xl font-bold brand-text">Lise</div>
+        <nav id="barra-nav" class="container mx-auto flex justify-between items-center bg-white/95 backdrop-blur-md py-4 px-8 rounded-2xl shadow-sm border border-brand-slate/5 transition-all duration-300">
+            <div class="flex items-center gap-3">
+                <!-- Logotipo Simbolizado -->
+                <div class="w-8 h-8 rounded-full bg-brand-dark flex items-center justify-center">
+                    <span class="text-brand-cream font-serif font-bold text-sm">L</span>
+                </div>
+                <span class="text-2xl font-bold font-serif text-brand-dark tracking-wide">Lise</span>
+            </div>
 
             <!-- Menu Desktop -->
             <ul class="hidden md:flex space-x-8 font-medium">
-                <li><a href="#inicio" class="hover-brand-text transition">Início</a></li>
-                <li><a href="#recursos" class="hover-brand-text transition">Recursos</a></li>
-                <li><a href="#sobre" class="hover-brand-text transition">Sobre</a></li>
-                <li><a href="#contato" class="hover-brand-text transition">Contato</a></li>
+                <li><a href="#inicio" class="hover:text-brand-gold transition-colors duration-200">Início</a></li>
+                <li><a href="#problema" class="hover:text-brand-gold transition-colors duration-200">O Problema</a></li>
+                <li><a href="#metodo" class="hover:text-brand-gold transition-colors duration-200 font-semibold">Decodificador</a></li>
+                <li><a href="#recursos" class="hover:text-brand-gold transition-colors duration-200">Funcionalidades</a></li>
+                <li><a href="#desenvolvedores" class="hover:text-brand-gold transition-colors duration-200">Equipe</a></li>
             </ul>
 
+            <div class="hidden md:block">
+                <a href="#metodo" class="bg-brand-dark text-brand-cream px-5 py-2.5 rounded-xl font-medium hover:bg-brand-slate transition shadow-md shadow-brand-dark/10">Experimentar Lise</a>
+            </div>
+
             <!-- Botão Mobile -->
-            <button id="botao-menu" class="md:hidden focus:outline-none">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7">
-                    </path>
-                </svg>
+            <button id="botao-menu" class="md:hidden focus:outline-none text-brand-dark">
+                <i data-lucide="menu" class="w-6 h-6"></i>
             </button>
         </nav>
 
         <!-- Menu Mobile -->
-        <div id="menu-movel" class="hidden md:hidden bg-white mt-2 rounded-2xl shadow-xl border px-6 py-4">
-            <a href="#inicio" class="block py-2 border-b border-slate-100">Início</a>
-            <a href="#recursos" class="block py-2 border-b border-slate-100">Recursos</a>
-            <a href="#sobre" class="block py-2 border-b border-slate-100">Sobre</a>
-            <a href="#contato" class="block py-2">Contato</a>
+        <div id="menu-movel" class="hidden md:hidden bg-white mt-2 rounded-2xl shadow-xl border border-brand-slate/10 px-6 py-4">
+            <a href="#inicio" class="block py-2.5 border-b border-brand-cream font-medium">Início</a>
+            <a href="#problema" class="block py-2.5 border-b border-brand-cream font-medium">O Problema</a>
+            <a href="#metodo" class="block py-2.5 border-b border-brand-cream font-medium text-brand-gold">Decodificador Interativo</a>
+            <a href="#recursos" class="block py-2.5 border-b border-brand-cream font-medium">Funcionalidades</a>
+            <a href="#desenvolvedores" class="block py-2.5 font-medium">Equipe</a>
         </div>
     </header>
 
-    <main>
-        <!-- SEÇÃO HERO -->
-        <section id="inicio" class="pt-48 pb-20 px-6">
-            <div class="container mx-auto text-center">
-                <h1 class="text-5xl md:text-6xl font-extrabold mb-6 leading-tight">
-                    Biologia sem <span class="brand-text">complicação</span> aqui
-                </h1>
-                <p class="text-lg text-slate-600 mb-10 max-w-2xl mx-auto">
-                    Um software de Navegação Sistêmica Interativa.
-                </p>
-                <div class="flex justify-center gap-4">
-                    <button
-                        class="brand-bg text-white px-8 py-3 rounded-lg font-semibold hover-brand-bg transition shadow-lg shadow-brand">Começar
-                        Agora</button>
-                    <button
-                        class="border border-slate-300 px-8 py-3 rounded-lg font-semibold hover:bg-slate-100 transition">Saiba
-                        Mais</button>
+    <main class="overflow-x-hidden">
+        
+        <!-- SEÇÃO HERO (TELA CHEIA COM FLASHCARD INTERATIVO) -->
+        <section id="inicio" class="min-h-screen flex items-center pt-24 pb-12 px-6 bg-gradient-to-b from-brand-cream via-brand-cream to-white">
+            <div class="container mx-auto max-w-6xl w-full">
+                <div class="grid md:grid-cols-12 gap-12 items-center">
+                    <div class="md:col-span-7 space-y-8">
+                        <span class="inline-flex items-center gap-2 bg-brand-sage/10 text-brand-dark px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider">
+                            <span class="w-2 h-2 rounded-full bg-brand-gold animate-pulse"></span> Projeto de Conclusão de Curso
+                        </span>
+                        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold text-brand-dark leading-tight">
+                            Viaje pela escala <br class="hidden lg:inline"><span class="italic text-brand-gold">da vida</span>.
+                        </h1>
+                        <p class="text-lg text-brand-slate/80 leading-relaxed max-w-xl">
+                            Esqueça a memorização forçada e os livros estáticos. O <strong class="text-brand-dark">Lise</strong> mapeia as conexões biológicas de forma interativa, ajudando estudantes e professores a decodificarem a biologia através da etimologia e da morfologia das palavras.
+                        </p>
+                        <div class="flex flex-wrap gap-4 pt-2">
+                            <a href="#metodo" class="bg-brand-dark text-white px-8 py-4 rounded-xl font-semibold hover:bg-brand-slate transition-all transform hover:-translate-y-1 shadow-lg shadow-brand-dark/25 inline-flex items-center gap-2">
+                                Testar decodificador <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </a>
+                            <a href="#problema" class="border border-brand-slate/20 text-brand-dark px-8 py-4 rounded-xl font-semibold hover:bg-white hover:border-brand-dark transition-all">
+                                Entender o Método
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="md:col-span-5 relative">
+                        <!-- Flashcard Interativo do Lise -->
+                        <div class="w-full max-w-sm mx-auto perspective-1000 h-[380px] cursor-pointer group animate-fade-in" onclick="this.querySelector('.preserve-3d').classList.toggle('rotate-y-180')">
+                            <div class="preserve-3d relative w-full h-full duration-700 transition-transform shadow-2xl rounded-3xl border border-brand-slate/5">
+                                
+                                <!-- LADO DA FRENTE (Frente do Flashcard) -->
+                                <div class="absolute inset-0 w-full h-full backface-hidden bg-white rounded-3xl p-8 flex flex-col justify-between">
+                                    <div class="flex items-center justify-between">
+                                        <span class="bg-brand-sage/10 text-brand-dark text-xs font-bold px-3 py-1.5 rounded-full inline-flex items-center gap-1.5">
+                                            <i data-lucide="circle-help" class="w-3.5 h-3.5 text-brand-sage"></i> O que significa?
+                                        </span>
+                                        <span class="text-xs text-brand-slate/40 uppercase tracking-widest font-semibold">Termo nº 01</span>
+                                    </div>
+                                    
+                                    <div class="text-center my-auto space-y-3">
+                                        <span class="text-xs text-brand-gold uppercase tracking-wider font-semibold">A origem do nosso nome</span>
+                                        <h3 class="text-5xl font-serif font-bold text-brand-dark tracking-wide">Lise</h3>
+                                        <p class="text-xs text-brand-slate/40 italic flex items-center justify-center gap-1.5 mt-4">
+                                            <i data-lucide="mouse-pointer-click" class="w-3.5 h-3.5 text-brand-gold"></i> Clique no card para revelar
+                                        </p>
+                                    </div>
+
+                                    <div class="flex justify-between items-center pt-4 border-t border-brand-cream text-xs text-brand-slate/50">
+                                        <span>Biologia Descomplicada</span>
+                                        <i data-lucide="refresh-cw" class="w-4 h-4 text-brand-gold"></i>
+                                    </div>
+                                </div>
+
+                                <!-- LADO DE TRÁS (Verso do Flashcard) -->
+                                <div class="absolute inset-0 w-full h-full backface-hidden bg-brand-dark text-brand-cream rounded-3xl p-8 flex flex-col justify-between rotate-y-180">
+                                    <div class="flex items-center justify-between">
+                                        <span class="bg-white/10 text-brand-gold text-xs font-bold px-3 py-1.5 rounded-full inline-flex items-center gap-1.5">
+                                            <i data-lucide="circle-check" class="w-3.5 h-3.5 text-brand-gold"></i> Decodificado!
+                                        </span>
+                                        <span class="text-xs text-white/40 uppercase tracking-widest font-semibold">Conceito do Lise</span>
+                                    </div>
+
+                                    <div class="my-auto space-y-4">
+                                        <div>
+                                            <span class="text-xs text-brand-sage uppercase tracking-wider font-semibold font-sans">Etimologia (Grego)</span>
+                                            <h4 class="text-3xl font-serif font-bold text-white">lysis</h4>
+                                        </div>
+                                        <div class="space-y-2">
+                                            <p class="text-brand-cream font-medium text-sm leading-relaxed">
+                                                Significa <span class="text-brand-gold font-bold">quebra, dissolução ou divisão</span>.
+                                            </p>
+                                            <p class="text-xs text-brand-cream/70 leading-relaxed font-sans">
+                                                É o sufixo por trás de <em>Glicólise</em> (quebra da glicose) e <em>Citólise</em> (rompimento celular). Nosso software recebeu esse nome porque nossa missão é justamente "quebrar" termos complexos para facilitar a sua aprendizagem.
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex justify-between items-center pt-4 border-t border-white/10 text-xs text-brand-cream/50">
+                                        <span>Lise Dictionary</span>
+                                        <i data-lucide="sparkles" class="w-4 h-4 text-brand-gold"></i>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        
+                        <!-- Decorações de Fundo -->
+                        <div class="absolute -top-6 -right-6 w-32 h-32 bg-brand-sage/10 rounded-full blur-2xl pointer-events-none"></div>
+                        <div class="absolute -bottom-6 -left-6 w-40 h-40 bg-brand-gold/10 rounded-full blur-3xl pointer-events-none"></div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- SEÇÃO RECURSOS -->
-        <section id="recursos" class="py-20 bg-white">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-16">
-                    <h2 class="text-3xl font-bold mb-4">Recursos Principais</h2>
-                    <p class="text-slate-600">Tudo o que você precisa para escalar seu negócio.</p>
-                </div>
-                <div class="grid md:grid-cols-3 gap-12">
-                    <!-- Recurso 1 -->
-                    <div class="p-8 border rounded-2xl hover-border-brand transition group">
-                        <div
-                            class="w-12 h-12 brand-bg-soft brand-text rounded-lg flex items-center justify-center mb-6 group-hover-brand-bg group-hover:text-white transition">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-bold mb-3">Recurso Um</h3>
-                        <p class="text-slate-600">Descrição genérica de uma funcionalidade poderosa que resolve um
-                            problema real.</p>
-                    </div>
-                    <!-- Recurso 2 -->
-                    <div class="p-8 border rounded-2xl hover:border-green-500 transition group">
-                        <div
-                            class="w-12 h-12 bg-green-100 text-green-600 rounded-lg flex items-center justify-center mb-6 group-hover:bg-green-600 group-hover:text-white transition">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-bold mb-3">Recurso Dois</h3>
-                        <p class="text-slate-600">Descrição genérica de uma funcionalidade poderosa que resolve um
-                            problema real.</p>
-                    </div>
-                    <!-- Recurso 3 -->
-                    <div class="p-8 border rounded-2xl hover:border-purple-500 transition group">
-                        <div
-                            class="w-12 h-12 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center mb-6 group-hover:bg-purple-600 group-hover:text-white transition">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path
-                                    d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z">
-                                </path>
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-bold mb-3">Recurso Três</h3>
-                        <p class="text-slate-600">Descrição genérica de uma funcionalidade poderosa que resolve um
-                            problema real.</p>
-                    </div>
-                </div>
+        <!-- SEÇÃO: O PROBLEMA VS CIÊNCIA (TELA CHEIA) -->
+        <section id="problema" class="min-h-screen flex items-center py-20 bg-brand-dark text-brand-cream relative overflow-hidden">
+            <div class="absolute right-0 top-0 opacity-10 pointer-events-none">
+                <svg class="w-96 h-96" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="40" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4"/>
+                    <circle cx="50" cy="50" r="25" stroke="currentColor" stroke-width="1"/>
+                </svg>
             </div>
-        </section>
 
-        <!-- SEÇÃO SOBRE -->
-        <section id="sobre" class="py-20">
-            <div class="container mx-auto px-6 flex flex-col md:flex-row items-center gap-12">
-                <div class="md:w-1/2">
-                    <div
-                        class="bg-slate-200 aspect-video rounded-3xl flex items-center justify-center text-slate-400 border-2 border-dashed border-slate-300">
-                        [IMAGEM_AQUI]
-                    </div>
-                </div>
-                <div class="md:w-1/2">
-                    <h2 class="text-3xl font-bold mb-6">Feito para Profissionais Modernos</h2>
-                    <p class="text-slate-600 mb-6">
-                        Este espaço é ideal para contar sua história ou explicar o diferencial do seu produto. Foque nos
-                        benefícios e na experiência do usuário.
+            <div class="container mx-auto max-w-6xl px-6 w-full">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <p class="text-brand-gold uppercase tracking-wider text-xs font-semibold mb-2">Fundamentação Científica</p>
+                    <h2 class="text-3xl md:text-4xl font-serif font-bold mb-6">Rompa a barreira da "decoreba"</h2>
+                    <p class="text-brand-cream/80 text-lg leading-relaxed">
+                        A memorização mecânica de termos biológicos gera desinteresse e dificulta a evolução dos alunos, forçando professores a revisões repetitivas.
                     </p>
-                    <ul class="space-y-4">
-                        <li class="flex items-center gap-3">
-                            <span class="brand-bg-soft brand-text p-1 rounded-full text-xs">✔</span>
-                            Código de alta performance
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <span class="brand-bg-soft brand-text p-1 rounded-full text-xs">✔</span>
-                            Design totalmente responsivo
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <span class="brand-bg-soft brand-text p-1 rounded-full text-xs">✔</span>
-                            Estrutura otimizada para SEO
-                        </li>
-                    </ul>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <!-- O Estudo de Caso -->
+                    <div class="space-y-6 bg-white/5 p-8 rounded-3xl border border-white/10">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-brand-gold/10 flex items-center justify-center">
+                                <i data-lucide="graduation-cap" class="w-6 h-6 text-brand-gold"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white text-lg">Estudo de Referência UFRGS</h4>
+                                <p class="text-xs text-brand-sage">Artigo: Glossário Etimológico de Biologia</p>
+                            </div>
+                        </div>
+                        <p class="text-brand-cream/80 text-sm leading-relaxed">
+                            De acordo com a pesquisa desenvolvida pela Universidade Federal do Rio Grande do Sul, a divisão de termos biológicos complexos em seus componentes morfológicos fundamentais (prefixos e sufixos) reduz drasticamente a estranheza das palavras complexas, permitindo que os estudantes deduzam significados de forma <strong>autônoma</strong>.
+                        </p>
+                        <div class="pt-4 border-t border-white/10 flex items-center justify-between text-xs text-brand-sage">
+                            <span>Morfologia</span>
+                            <span>Autonomia Estudantil</span>
+                            <span>Apoio ao Professor</span>
+                        </div>
+                    </div>
+
+                    <!-- Solução -->
+                    <div class="space-y-6">
+                        <h3 class="text-2xl md:text-3xl font-serif font-bold text-brand-gold">A nossa solução: focar na raiz estrutural das palavras</h3>
+                        <p class="text-brand-cream/80 text-sm leading-relaxed">
+                            Ao invés de tentar decorar centenas de conceitos inteiros isolados, o aluno no <strong>Lise</strong> aprende a reconhecer os blocos lógicos das palavras. Compreendendo apenas alguns prefixos e sufixos, ele adquire o poder de decodificar milhares de termos científicos intuitivamente.
+                        </p>
+                        <div class="grid grid-cols-2 gap-4 pt-4">
+                            <div class="p-4 bg-white/5 rounded-xl border border-white/5">
+                                <span class="font-bold text-white block text-lg">glico-</span>
+                                <span class="text-xs text-brand-sage">açúcar / doce</span>
+                            </div>
+                            <div class="p-4 bg-white/5 rounded-xl border border-white/5">
+                                <span class="font-bold text-white block text-lg">-lise</span>
+                                <span class="text-xs text-brand-sage">quebra / decomposição</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- CHAMADA PARA AÇÃO (CTA) -->
-        <section id="contato" class="py-20">
-            <div class="container mx-auto px-6">
-                <div class="brand-bg rounded-3xl p-12 text-center text-white shadow-2xl shadow-brand-soft">
-                    <h2 class="text-4xl font-bold mb-6">Pronto para transformar sua ideia?</h2>
-                    <p class="text-white/80 mb-10 max-w-xl mx-auto text-lg">Junte-se a centenas de usuários que já
-                        otimizaram seus processos com nossa plataforma.</p>
-                    <button
-                        class="bg-white brand-text px-10 py-4 rounded-full font-bold text-lg hover:bg-slate-100 transition shadow-xl">
-                        Começar Agora Grátis
-                    </button>
+        <!-- SEÇÃO: INTERATIVIDADE (O DECODIFICADOR - TELA CHEIA) -->
+        <section id="metodo" class="min-h-screen flex items-center py-20 bg-white relative">
+            <div class="container mx-auto max-w-5xl px-6 w-full">
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <span class="text-brand-gold font-bold text-xs uppercase tracking-wider block mb-2">Simulador Lise</span>
+                    <h2 class="text-3xl md:text-4xl font-serif font-bold text-brand-dark mb-4">Construa termos biológicos você mesmo</h2>
+                    <p class="text-brand-slate/80 text-sm">
+                        Selecione um prefixo e um sufixo para desvendar a lógica etimológica por trás do termo biológico. Veja como o aprendizado se torna óbvio.
+                    </p>
+                </div>
+
+                <!-- Painel Interativo de Combinação de Palavras -->
+                <div class="bg-brand-cream rounded-3xl p-8 border border-brand-slate/5 shadow-xl">
+                    <div class="grid md:grid-cols-2 gap-8">
+                        
+                        <!-- Coluna 1: Opções de Radicais -->
+                        <div class="space-y-6">
+                            <div>
+                                <h4 class="text-xs uppercase text-brand-slate/60 font-bold mb-3 tracking-widest">1. Prefixo (Início)</h4>
+                                <div class="grid grid-cols-2 gap-3" id="prefix-buttons">
+                                    <button onclick="selectPrefix('glico', 'Açúcar / Doce')" class="prefix-btn p-4 rounded-xl text-left font-medium bg-white border border-slate-200 hover:border-brand-sage transition-all focus:outline-none flex flex-col">
+                                        <span class="text-brand-dark font-bold text-lg">glico-</span>
+                                        <span class="text-xs text-brand-slate/60">açúcar</span>
+                                    </button>
+                                    <button onclick="selectPrefix('cito', 'Célula')" class="prefix-btn p-4 rounded-xl text-left font-medium bg-white border border-slate-200 hover:border-brand-sage transition-all focus:outline-none flex flex-col">
+                                        <span class="text-brand-dark font-bold text-lg">cito-</span>
+                                        <span class="text-xs text-brand-slate/60">célula</span>
+                                    </button>
+                                    <button onclick="selectPrefix('hemato', 'Sangue')" class="prefix-btn p-4 rounded-xl text-left font-medium bg-white border border-slate-200 hover:border-brand-sage transition-all focus:outline-none flex flex-col">
+                                        <span class="text-brand-dark font-bold text-lg">hemato-</span>
+                                        <span class="text-xs text-brand-slate/60">sangue</span>
+                                    </button>
+                                    <button onclick="selectPrefix('lipo', 'Gordura / Lipídio')" class="prefix-btn p-4 rounded-xl text-left font-medium bg-white border border-slate-200 hover:border-brand-sage transition-all focus:outline-none flex flex-col">
+                                        <span class="text-brand-dark font-bold text-lg">lipo-</span>
+                                        <span class="text-xs text-brand-slate/60">gordura</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h4 class="text-xs uppercase text-brand-slate/60 font-bold mb-3 tracking-widest">2. Sufixo (Fim)</h4>
+                                <div class="grid grid-cols-2 gap-3" id="suffix-buttons">
+                                    <button onclick="selectSuffix('lise', 'Quebra / Decomposição')" class="suffix-btn p-4 rounded-xl text-left font-medium bg-white border border-slate-200 hover:border-brand-sage transition-all focus:outline-none flex flex-col">
+                                        <span class="text-brand-dark font-bold text-lg">-lise</span>
+                                        <span class="text-xs text-brand-slate/60">quebra</span>
+                                    </button>
+                                    <button onclick="selectSuffix('logia', 'Estudo / Ciência')" class="suffix-btn p-4 rounded-xl text-left font-medium bg-white border border-slate-200 hover:border-brand-sage transition-all focus:outline-none flex flex-col">
+                                        <span class="text-brand-dark font-bold text-lg">-logia</span>
+                                        <span class="text-xs text-brand-slate/60">estudo de</span>
+                                    </button>
+                                    <button onclick="selectSuffix('genese', 'Origem / Geração')" class="suffix-btn p-4 rounded-xl text-left font-medium bg-white border border-slate-200 hover:border-brand-sage transition-all focus:outline-none flex flex-col">
+                                        <span class="text-brand-dark font-bold text-lg">-gênese</span>
+                                        <span class="text-xs text-brand-slate/60">origem</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Coluna 2: Resultado em Tempo Real -->
+                        <div class="flex flex-col justify-between bg-white rounded-2xl p-6 border border-brand-slate/5 shadow-inner">
+                            <div>
+                                <h4 class="text-xs uppercase text-brand-slate/60 font-bold mb-4 tracking-widest">Visualizador do Termo</h4>
+                                <div class="text-center py-10 bg-brand-cream/40 rounded-xl border border-dashed border-slate-200 mb-6">
+                                    <span id="term-display" class="text-4xl font-serif font-bold text-brand-dark tracking-wide">Selecione as partes</span>
+                                    <p id="formula-display" class="text-sm text-brand-slate/50 mt-2">Escolha acima para combinar</p>
+                                </div>
+                                <div class="space-y-3">
+                                    <h5 class="text-xs font-bold uppercase text-brand-gold tracking-wider">Significado Etimológico</h5>
+                                    <p id="definition-display" class="text-brand-slate text-sm leading-relaxed">
+                                        A composição morfológica revelará o significado intuitivo do termo gerado sem a necessidade de memorização estrita.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="pt-6 border-t border-slate-100 flex items-center justify-between text-xs text-brand-slate/60">
+                                <span>Lógica Etimológica Ativa</span>
+                                <button onclick="resetTerm()" class="text-brand-gold hover:underline font-semibold focus:outline-none flex items-center gap-1">
+                                    <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> Limpar seleção
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO: RECURSOS DO PRODUTO (STUDENT & TEACHER - TELA CHEIA) -->
+        <section id="recursos" class="min-h-screen flex items-center py-20 bg-brand-cream relative">
+            <div class="container mx-auto max-w-6xl px-6 w-full">
+                <div class="text-center max-w-2xl mx-auto mb-20">
+                    <p class="text-brand-gold uppercase tracking-wider text-xs font-semibold mb-2">Interface & Ecossistema</p>
+                    <h2 class="text-3xl md:text-4xl font-serif font-bold text-brand-dark">Conheça as duas faces da nossa plataforma</h2>
+                    <p class="text-brand-slate/80 text-sm mt-4">
+                        Uma plataforma integrada que transforma o processo educativo tanto para quem consome quanto para quem orienta.
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-12">
+                    <!-- Painel do Estudante -->
+                    <div class="space-y-6">
+                        <div class="w-12 h-12 rounded-xl bg-brand-dark text-brand-cream flex items-center justify-center shadow-md">
+                            <i data-lucide="book-open" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <h3 class="text-2xl font-serif font-bold text-brand-dark">Para o Aluno: Autonomia e gamificação</h3>
+                        <p class="text-brand-slate/80 text-sm leading-relaxed">
+                            Acesse trilhas de aprendizado criadas de forma personalizada. Decodifique dezenas de termos através de mecânicas de flashcards, quizzes práticos e visualizadores inteligentes sem interromper o fluxo das aulas teóricas.
+                        </p>
+                        <ul class="space-y-3 pt-2 text-sm">
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check" class="w-5 h-5 text-brand-gold flex-shrink-0 mt-0.5"></i>
+                                <span><strong>Trilhas Guiadas:</strong> Progressão contínua com feedback de performance em tempo real.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check" class="w-5 h-5 text-brand-gold flex-shrink-0 mt-0.5"></i>
+                                <span><strong>Flashcards inteligentes:</strong> Controle de repetição espaçada baseado na sua dificuldade de fixação.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Painel do Professor -->
+                    <div class="space-y-6">
+                        <div class="w-12 h-12 rounded-xl bg-brand-sage text-brand-cream flex items-center justify-center shadow-md">
+                            <i data-lucide="bar-chart-3" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <h3 class="text-2xl font-serif font-bold text-brand-dark">Para o Professor: Gestão e análise de dados</h3>
+                        <p class="text-brand-slate/80 text-sm leading-relaxed">
+                            Monitore o avanço analítico de suas turmas de forma otimizada. Identifique os radicais mais desafiadores e adapte o conteúdo programático sem esforço excessivo em revisões constantes de conceitos básicos de ciclos anteriores.
+                        </p>
+                        <ul class="space-y-3 pt-2 text-sm">
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check" class="w-5 h-5 text-brand-gold flex-shrink-0 mt-0.5"></i>
+                                <span><strong>Painel Administrativo:</strong> Criação simplificada de novas trilhas de termos personalizados.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check" class="w-5 h-5 text-brand-gold flex-shrink-0 mt-0.5"></i>
+                                <span><strong>Métricas de Desempenho:</strong> Gráficos por subáreas como Bioquímica, Citologia e Fisiologia.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO: DESENVOLVEDORES (EQUIPE - TELA CHEIA) -->
+        <section id="desenvolvedores" class="min-h-screen flex items-center py-20 bg-white">
+            <div class="container mx-auto max-w-6xl px-6 w-full">
+                <div class="text-center max-w-2xl mx-auto mb-16">
+                    <p class="text-brand-gold uppercase tracking-wider text-xs font-semibold mb-2">Quem Somos</p>
+                    <h2 class="text-3xl md:text-4xl font-serif font-bold text-brand-dark">Desenvolvedores do Projeto</h2>
+                    <p class="text-brand-slate/80 text-sm mt-4">
+                        Conheça os acadêmicos responsáveis pela idealização, design e programação do ecossistema Lise.
+                    </p>
+                </div>
+
+                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Desenvolvedor 1 -->
+                    <div class="bg-brand-cream/50 rounded-2xl p-6 border border-brand-slate/5 text-center flex flex-col justify-between hover:shadow-lg transition duration-300">
+                        <div>
+                            <div class="w-16 h-16 rounded-full bg-brand-slate/10 mx-auto mb-6 flex items-center justify-center text-brand-dark">
+                                <i data-lucide="code" class="w-8 h-8"></i>
+                            </div>
+                            <h4 class="font-serif font-bold text-lg text-brand-dark">Lívia Domingues</h4>
+                            <p class="text-xs text-brand-gold font-semibold uppercase tracking-wider mt-1">Scrum Master e Desenvolvedora</p>
+                            <p class="text-xs text-brand-slate/70 mt-4 leading-relaxed">
+                                Breve descrição padrão das atividades, conquistas ou interesses acadêmicos deste membro da equipe.
+                            </p>
+                        </div>
+                        <div class="pt-6 mt-6 border-t border-slate-200 text-xs text-brand-slate/50 flex items-center justify-center gap-1">
+                            livia.matos.senai@gmail.com
+                        </div>
+                    </div>
+
+                    <!-- Desenvolvedor 2 -->
+                    <div class="bg-brand-cream/50 rounded-2xl p-6 border border-brand-slate/5 text-center flex flex-col justify-between hover:shadow-lg transition duration-300">
+                        <div>
+                            <div class="w-16 h-16 rounded-full bg-brand-slate/10 mx-auto mb-6 flex items-center justify-center text-brand-dark">
+                                <i data-lucide="code" class="w-8 h-8"></i>
+                            </div>
+                            <h4 class="font-serif font-bold text-lg text-brand-dark">Isabelly Ferreira</h4>
+                            <p class="text-xs text-brand-gold font-semibold uppercase tracking-wider mt-1">Tech Lead e Desenvolvedora</p>
+                            <p class="text-xs text-brand-slate/70 mt-4 leading-relaxed">
+                                Breve descrição padrão das atividades, conquistas ou interesses acadêmicos deste membro da equipe.
+                            </p>
+                        </div>
+                        <div class="pt-6 mt-6 border-t border-slate-200 text-xs text-brand-slate/50 flex items-center justify-center gap-1">
+                            isabelly.ferreira.senai@gmail.com
+                        </div>
+                    </div>
+
+                    <!-- Desenvolvedor 3 -->
+                    <div class="bg-brand-cream/50 rounded-2xl p-6 border border-brand-slate/5 text-center flex flex-col justify-between hover:shadow-lg transition duration-300">
+                        <div>
+                            <div class="w-16 h-16 rounded-full bg-brand-slate/10 mx-auto mb-6 flex items-center justify-center text-brand-dark">
+                                <i data-lucide="code" class="w-8 h-8"></i>
+                            </div>
+                            <h4 class="font-serif font-bold text-lg text-brand-dark">João Pedro Stadler</h4>
+                            <p class="text-xs text-brand-gold font-semibold uppercase tracking-wider mt-1">Desenvolvedor Back-End</p>
+                            <p class="text-xs text-brand-slate/70 mt-4 leading-relaxed">
+                                Breve descrição padrão das atividades, conquistas ou interesses acadêmicos deste membro da equipe.
+                            </p>
+                        </div>
+                        <div class="pt-6 mt-6 border-t border-slate-200 text-xs text-brand-slate/50 flex items-center justify-center gap-1">
+                            joãopedrostadlerroza.senai@gmail.com
+                        </div>
+                    </div>
+
+                    <!-- Desenvolvedor 4 -->
+                    <div class="bg-brand-cream/50 rounded-2xl p-6 border border-brand-slate/5 text-center flex flex-col justify-between hover:shadow-lg transition duration-300">
+                        <div>
+                            <div class="w-16 h-16 rounded-full bg-brand-slate/10 mx-auto mb-6 flex items-center justify-center text-brand-dark">
+                                <i data-lucide="code" class="w-8 h-8"></i>
+                            </div>
+                            <h4 class="font-serif font-bold text-lg text-brand-dark">John Cristopher</h4>
+                            <p class="text-xs text-brand-gold font-semibold uppercase tracking-wider mt-1">Desenvolvedor Front-End</p>
+                            <p class="text-xs text-brand-slate/70 mt-4 leading-relaxed">
+                                Breve descrição padrão das atividades, conquistas ou interesses acadêmicos deste membro da equipe.
+                            </p>
+                        </div>
+                        <div class="pt-6 mt-6 border-t border-slate-200 text-xs text-brand-slate/50 flex items-center justify-center gap-1">
+                            john.cristopher.senai@gmail.com
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO: CTA (Chamada Para Ação - TELA CHEIA) -->
+        <section class="min-h-screen flex items-center py-20 bg-brand-cream">
+            <div class="container mx-auto px-6 max-w-4xl w-full">
+                <div class="bg-brand-dark rounded-3xl p-12 text-center text-brand-cream shadow-2xl relative overflow-hidden">
+                    <div class="relative z-10 space-y-6">
+                        <h2 class="text-3xl md:text-4xl font-serif font-bold">Pronto para transformar o ensino biológico?</h2>
+                        <p class="text-brand-cream/80 max-w-xl mx-auto text-sm leading-relaxed">
+                            O Lise está sendo desenvolvido com o intuito de simplificar a jornada de estudantes e docentes. Entre em contato para conhecer as pesquisas ou acompanhar os próximos testes da nossa versão beta.
+                        </p>
+                        <div class="pt-4">
+                            <a href="mailto:contato@exemplo.com" class="bg-white text-brand-dark px-10 py-4 rounded-xl font-bold text-sm hover:bg-brand-cream transition-all shadow-xl inline-flex items-center gap-2">
+                                <i data-lucide="mail" class="w-4 h-4"></i> Entrar em Contato
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Elementos abstratos de fundo -->
+                    <div class="absolute -top-12 -left-12 w-48 h-48 bg-white/5 rounded-full"></div>
+                    <div class="absolute -bottom-12 -right-12 w-48 h-48 bg-white/5 rounded-full"></div>
                 </div>
             </div>
         </section>
     </main>
 
     <!-- RODAPÉ -->
-    <footer class="bg-white border-t border-slate-100 py-12">
-        <div class="container mx-auto px-6 text-center">
-            <p class="text-slate-500">&copy; 2026 Lise Dictionary. Todos os direitos reservados.</p>
-            <div class="mt-6 flex justify-center space-x-8 text-slate-400">
-                <a href="#" class="hover-brand-text transition">Privacidade</a>
-                <a href="#" class="hover-brand-text transition">Termos</a>
-                <a href="#" class="hover-brand-text transition">Instagram</a>
+    <footer class="bg-brand-cream border-t border-brand-slate/10 py-12">
+        <div class="container mx-auto px-6 text-center max-w-6xl">
+            <p class="text-brand-slate/60 text-sm">&copy; 2026 Lise. Desenvolvido pelo grupo Bit Bang Theory.</p>
+            <div class="mt-6 flex justify-center space-x-8 text-sm text-brand-slate/50">
+                <a href="#inicio" class="hover:text-brand-gold transition">Início</a>
+                <a href="#problema" class="hover:text-brand-gold transition">O Estudo</a>
+                <a href="#metodo" class="hover:text-brand-gold transition">Etimologia</a>
+                <a href="#desenvolvedores" class="hover:text-brand-gold transition">Equipe</a>
             </div>
         </div>
     </footer>
