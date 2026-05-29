@@ -60,27 +60,27 @@
     class="bg-brand-cream text-brand-slate font-sans antialiased selection:bg-brand-sage/30 selection:text-brand-dark">
 
     <!-- HEADER / NAVEGAÇÃO -->
-    <header id="cabecalho-principal" class="fixed w-full top-0 z-50 py-4 px-6">
+    <header id="cabecalho-principal" class="fixed w-full top-0 z-50 py-4 px-6 rounded-xl">
         <nav id="barra-nav"
-            class="container mx-auto flex justify-between items-center bg-white/80 backdrop-blur-md py-4 px-8 rounded-none transition-all duration-300">
-            <div class="text-2xl font-bold brand-text">Lise</div>
+            class="container mx-auto flex justify-between items-center bg-white/55 backdrop-blur-md py-6 px-8 rounded-xl transition-all duration-300">
+            <div class="text-3xl font-bold brand-text">Lise</div>
 
             <!-- Menu Desktop -->
             <ul class="hidden md:flex space-x-8 font-medium">
                 <li><a href="#inicio" class="hover:text-brand-gold transition-colors duration-200">Início</a></li>
                 <li><a href="#problema" class="hover:text-brand-gold transition-colors duration-200">O Problema</a></li>
-                <li><a href="#metodo"
-                        class="hover:text-brand-gold transition-colors duration-200 font-semibold">Decodificador</a>
+                <li><a href="#metodo" class="hover:text-brand-gold transition-colors duration-200">Decodificador</a>
                 </li>
                 <li><a href="#recursos" class="hover:text-brand-gold transition-colors duration-200">Funcionalidades</a>
                 </li>
                 <li><a href="#desenvolvedores" class="hover:text-brand-gold transition-colors duration-200">Equipe</a>
                 </li>
+                <li><a href="#faq" class="hover:text-brand-gold transition-colors duration-200">Dúvidas</a></li>
             </ul>
 
             <div class="hidden md:block">
                 <a href="#metodo"
-                    class="bg-brand-dark text-brand-cream px-5 py-2.5 rounded-xl font-medium hover:bg-brand-slate transition shadow-md shadow-brand-dark/10">Experimentar
+                    class="bg-brand-dark text-brand-cream px-5 py-3 rounded-xl font-medium hover:bg-brand-slate transition shadow-md shadow-brand-dark/10">Experimentar
                     Lise</a>
             </div>
 
@@ -626,6 +626,28 @@
                     <!-- Elementos abstratos de fundo -->
                     <div class="absolute -top-12 -left-12 w-48 h-48 bg-white/5 rounded-full"></div>
                     <div class="absolute -bottom-12 -right-12 w-48 h-48 bg-white/5 rounded-full"></div>
+                </div>
+            </div>
+        </section>
+        <!-- SEÇÃO: FAQ (PERGUNTAS FREQUENTES) -->
+        <section id="faq" class="py-20 bg-white">
+            <div class="container mx-auto max-w-4xl px-6">
+                <div class="text-center mb-12">
+                    <p class="text-brand-gold uppercase tracking-wider text-xs font-semibold mb-2">FAQ</p>
+                    <h2 class="text-3xl font-serif font-bold text-brand-dark">Perguntas Frequentes</h2>
+                    <p class="text-brand-slate/70 mt-4">Tudo o que você precisa saber sobre o método Lise.</p>
+                </div>
+                <div class="space-y-4">
+                    <div class="border border-brand-slate/10 rounded-2xl p-6 hover:border-brand-sage transition-colors">
+                        <h4 class="font-bold text-brand-dark flex justify-between items-center">
+                            Por que focar em prefixos e sufixos?
+                            <i data-lucide="circle-arrow-out-down-left" class="w-5 h-5 text-brand-gold"></i>
+                        </h4>
+                        <p class="text-sm text-brand-slate/80 mt-3">
+                            Porque a biologia utiliza o latim e o grego como base. Aprender 20 radicais permite
+                            decodificar mais de 500 termos sem precisar decorá-los individualmente.
+                        </p>
+                    </div>
                 </div>
             </div>
         </section>
